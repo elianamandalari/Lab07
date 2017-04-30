@@ -3,6 +3,7 @@ package it.polito.tdp.dizionario.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.dizionario.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -27,7 +28,7 @@ public class DizionarioController {
 	private Button btnTrovaVicini;
 	@FXML
 	private Button btnTrovaGradoMax;
-
+    Model model;
 	@FXML
 	void doReset(ActionEvent event) {
 		txtResult.setText("Reset!");
@@ -35,9 +36,12 @@ public class DizionarioController {
 
 	@FXML
 	void doGeneraGrafo(ActionEvent event) {
-
+     
 		try {
+			
 			txtResult.setText("Controller -- TODO!");
+			for(String s:model.createGraph(Integer.parseInt(inputNumeroLettere.getText())))
+			txtResult.appendText("\n"+s+"\n");
 			
 		} catch (RuntimeException re) {
 			txtResult.setText(re.getMessage());
@@ -48,7 +52,8 @@ public class DizionarioController {
 	void doTrovaGradoMax(ActionEvent event) {
 		
 		try {
-			txtResult.setText("Controller -- TODO!");
+			
+			txtResult.appendText("\n"+model.findMaxDegree());
 
 		} catch (RuntimeException re) {
 			txtResult.setText(re.getMessage());
@@ -60,6 +65,10 @@ public class DizionarioController {
 		
 		try {
 			txtResult.setText("Controller -- TODO!");
+			
+			for(String s:model.displayNeighbours(inputParola.getText()))
+				txtResult.appendText("\n"+ s +"\n");
+			
 
 		} catch (RuntimeException re) {
 			txtResult.setText(re.getMessage());
@@ -74,5 +83,10 @@ public class DizionarioController {
 		assert btnGeneraGrafo != null : "fx:id=\"btnGeneraGrafo\" was not injected: check your FXML file 'Dizionario.fxml'.";
 		assert btnTrovaVicini != null : "fx:id=\"btnTrovaVicini\" was not injected: check your FXML file 'Dizionario.fxml'.";
 		assert btnTrovaGradoMax != null : "fx:id=\"btnTrovaTutti\" was not injected: check your FXML file 'Dizionario.fxml'.";
+	}
+
+	public void setModel(Model model) {
+		this.model=model;
+		
 	}
 }
